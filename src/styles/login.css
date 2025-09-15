@@ -1,0 +1,45 @@
+.login-page {
+  min-height: 100vh;
+  width: 100%;
+  display: grid;        /* atau flex juga boleh */
+  place-items: center;  /* center horizontal + vertikal */
+  background: #179ed3;  /* contoh warna biru kamu */
+  padding: 24px;
+}
+
+.login-container {
+  max-width: 420px;
+  width: 100%;
+  margin: 0;            /* jangan pakai margin top/auto */
+  background: #fff;
+  padding: 28px;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0,0,0,.07);
+  text-align: center;
+}
+
+.login-container h2 { margin: 0 0 6px; }
+.subtitle { color: #666; margin-top: 0; }
+
+.login-container input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #dcdcdc;
+  border-radius: 10px;
+  margin: 16px 0;
+  outline: none;
+}
+.login-container input:focus { border-color: #6a5acd; }
+
+.login-container button {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  background: #6a5acd;
+  color: #fff;
+  font-weight: 600;
+}
+.login-container button[disabled] { opacity: .6; cursor: not-allowed; }
+
+.error { color: #c0392b; margin-top: 10px; font-weight: 600; }

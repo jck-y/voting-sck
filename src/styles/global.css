@@ -1,0 +1,7 @@
+* { box-sizing: border-box; }
+body { margin: 0; font-family: system-ui, Arial, sans-serif; background: #f6f7fb; color: #111; }
+button { border: none; }
+html, body, #root { height: 100%; }
+#root { min-height: 100vh; }
+body { margin: 0; }
+

@@ -1,0 +1,122 @@
+/* ====== Layout dasar ====== */
+.candidates-page {
+  max-width: 1100px;
+  margin: 6vh auto;
+  padding: 0 20px 60px;
+}
+
+/* ====== Header ====== */
+.cp-header {
+  text-align: center;
+}
+.cp-header h1 {
+  margin: 0 0 6px;
+  font-size: clamp(24px, 3vw, 34px);
+  letter-spacing: .2px;
+}
+.cp-sub {
+  margin: 0;
+  color: #6b7280;
+}
+
+/* ====== Grid kandidat ====== */
+.cp-grid {
+  margin-top: 28px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+}
+@media (max-width: 920px) {
+  .cp-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 640px) {
+  .cp-grid { grid-template-columns: 1fr; }
+}
+
+/* Saat busy, cegah interaksi */
+.cp-grid.disabled {
+  pointer-events: none;
+  opacity: .75;
+  filter: grayscale(.1);
+}
+
+/* ====== Kartu kandidat ====== */
+.cp-card {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 18px;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 8px 28px rgba(17, 24, 39, 0.06);
+  transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+  border: 1px solid rgba(17, 24, 39, 0.06);
+  display: grid;
+  gap: 12px;
+}
+.cp-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 36px rgba(17, 24, 39, 0.1);
+}
+.cp-card:disabled { cursor: default; }
+
+/* highlight kandidat yang diklik */
+.cp-card.picked {
+  border-color: #6366f1;
+  box-shadow: 0 12px 40px rgba(99, 102, 241, 0.25);
+}
+
+/* ====== Gambar & nama ====== */
+.cp-img-wrap {
+  aspect-ratio: 1 / 1;               /* kotak */
+  border-radius: 14px;
+  overflow: hidden;
+  position: relative;
+}
+.cp-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform: scale(1.02);
+}
+.cp-name {
+  font-weight: 700;
+  font-size: clamp(16px, 2vw, 18px);
+  color: #111827;
+}
+
+/* ====== Overlay Loading Popup ====== */
+.cp-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(17, 24, 39, 0.45);
+  display: grid;
+  place-items: center;
+  z-index: 50;
+  backdrop-filter: blur(2px);
+}
+.cp-popup {
+  background: #fff;
+  padding: 22px 26px;
+  border-radius: 16px;
+  min-width: 280px;
+  box-shadow: 0 16px 48px rgba(0,0,0,.18);
+  display: grid;
+  justify-items: center;
+  row-gap: 12px;
+}
+.cp-popup-text {
+  font-weight: 600;
+  color: #111827;
+}
+
+/* Spinner */
+.cp-spinner {
+  width: 46px;
+  height: 46px;
+  border-radius: 999px;
+  border: 4px solid #e5e7eb;
+  border-top-color: #6366f1;
+  animation: cp-spin 0.9s linear infinite;
+}
+@keyframes cp-spin { to { transform: rotate(360deg); } }
