@@ -4,7 +4,7 @@ import { doc, runTransaction, serverTimestamp } from "firebase/firestore";
 import { db } from "../firebase";
 import { CANDIDATES } from "../data/candidates";
 import "../styles/candidates.css";
-
+import logo from "../assets/logo/logosck.svg";
 export default function CandidatesPage() {
   const navigate = useNavigate();
   const email = sessionStorage.getItem("voterEmail");
@@ -55,7 +55,7 @@ return (
   <div className="candidates-wrapper" aria-busy={busy}>
     <div className="candidates-page">
       <header className="cp-header">
-        <img src="/src/assets/logo/logosck.svg" alt="Logo OSIS" className="cp-logo" />
+       <img src={logo} alt="" className="cp-logo" />
       </header>
       <div className="cp-hero">
         <h1>Vote for Your Student Council Representative</h1>
