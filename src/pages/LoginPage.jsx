@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import "../styles/login.css";
-import logo from "../assets/logo/logosck.svg";
+import bg from "../assets/logo/background.webp"; 
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -56,10 +56,11 @@ export default function LoginPage() {
   };
 
 return (
-  <div className="login-page">
+  <div
+      className="login-page"
+      style={{ backgroundImage: `url(${bg})` }} 
+    >
     <div className="login-container" role="form" aria-label="OSIS Election Login">
-      <img src={logo} alt="" className="login-logo" />
-
       <h2>OSIS Election Portal</h2>
       <p className="subtitle">
         Please enter your registered email to participate. Each email can submit exactly one vote
