@@ -51,13 +51,16 @@ export default function CandidatesPage() {
     }
   };
 
-  return (
-    <div className="candidates-page" aria-busy={busy}>
+return (
+  <div className="candidates-wrapper" aria-busy={busy}>
+    <div className="candidates-page">
       <header className="cp-header">
-        <h1>Pilih Kandidat OSIS</h1>
-        <p className="cp-sub">Klik salah satu kandidat untuk memberikan suara.</p>
+        <img src="/src/assets/logo/logosck.svg" alt="Logo OSIS" className="cp-logo" />
       </header>
-
+      <div className="cp-hero">
+        <h1>Vote for Your Student Council Representative</h1>
+        <p>Please choose exactly one candidate. Your choice will be recorded securely</p>
+      </div>
       <section className={`cp-grid ${busy ? "disabled" : ""}`}>
         {CANDIDATES.map((c) => (
           <button
@@ -73,18 +76,18 @@ export default function CandidatesPage() {
           </button>
         ))}
       </section>
+    </div>
 
-      {/* Overlay Loading Popup */}
-      {busy && (
-        <div className="cp-overlay" role="alert" aria-live="assertive">
-          <div className="cp-popup">
-            <div className="cp-spinner" aria-hidden />
-            <div className="cp-popup-text">
-              Merekam Vote Anda… mohon tunggu sebentar
-            </div>
+    {busy && (
+      <div className="cp-overlay" role="alert" aria-live="assertive">
+        <div className="cp-popup">
+          <div className="cp-spinner" aria-hidden />
+          <div className="cp-popup-text">
+            Merekam Vote Anda… mohon tunggu sebentar
           </div>
         </div>
-      )}
-    </div>
-  );
+      </div>
+    )}
+  </div>
+);
 }

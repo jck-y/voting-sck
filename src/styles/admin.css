@@ -1,0 +1,158 @@
+/* ===== Background reuse from login + blur soft ===== */
+.admin-wrap {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
+
+  /* pakai gambar login; kalau sudah pindah ke /public, ganti pathnya */
+  background-image: url("/src/assets/logo/background.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.admin-wrap::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,.35);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+}
+
+/* ===== Page container ===== */
+.admin-page {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 28px 20px 60px;
+  color: #0f172a;
+}
+
+/* ===== Header ===== */
+.adm-header {
+  text-align: center;
+  color: #fff;
+  margin-bottom: 18px;
+}
+.adm-header h1 {
+  margin: 6px 0 6px;
+  font-size: clamp(22px, 3vw, 34px);
+  text-shadow: 0 1px 10px rgba(0,0,0,.3);
+}
+.adm-sub {
+  margin: 0;
+  color: rgba(255,255,255,.85);
+}
+.adm-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 14px;
+  color: #a7f3d0;
+}
+.adm-live .dot {
+  width: 10px; height: 10px; border-radius: 999px;
+  background: #22c55e;
+  box-shadow: 0 0 10px #22c55e;
+}
+
+/* ===== Top stats ===== */
+.adm-stats {
+  margin: 18px auto 8px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  max-width: 560px;
+}
+.stat-card {
+  background: rgba(255,255,255,.14);
+  border: 1px solid rgba(255,255,255,.25);
+  border-radius: 14px;
+  padding: 14px 18px;
+  text-align: center;
+  color: #ffffff;
+  backdrop-filter: blur(10px);
+}
+.stat-title { font-size: 13px; opacity: .85; }
+.stat-value { font-size: 28px; font-weight: 800; }
+
+/* ===== Candidate grid ===== */
+.adm-grid {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+@media (max-width: 920px) { .adm-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 640px) { .adm-grid { grid-template-columns: 1fr; } }
+
+.cand-card {
+  background: #b70002;
+  border: 1px solid rgba(17, 24, 39, 0.06);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 28px rgba(17,24,39,.06);
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  align-items: center;
+}
+.cand-media {
+  width: 120px; height: 150px; overflow: hidden;
+  border-radius: 16px;
+}
+.cand-media img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+.cand-body {
+  padding: 12px 14px;
+}
+.cand-name {
+  font-weight: 800; color: #ffffff; margin-bottom: 6px;
+}
+.cand-row {
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-bottom: 8px;
+}
+.cand-count { font-weight: 700; color: #ffffff; }
+.cand-pct { font-weight: 700; color: #ffffff; }
+
+/* progress bar */
+.bar {
+  height: 10px;
+  background: #e5e7eb;
+  border-radius: 999px;
+  overflow: hidden;
+}
+.bar-fill {
+  height: 100%;
+  width: 0%;
+  background-color: #09277f;
+  border-radius: 999px;
+  transition: width .3s ease;
+}
+
+/* ===== Recent votes ===== */
+.adm-recent {
+  margin-top: 26px;
+  background: rgba(255,255,255,0.5);
+  border: 1px solid rgba(17, 24, 39, 0.06);
+  border-radius: 14px;
+  padding: 14px;
+}
+.adm-recent h3 { margin: 0 0 10px; }
+.recent-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.recent-list li {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 90px;
+}
+.recent-list .badge {
+  display: inline-block; padding: 6px 10px; border-radius: 999px;
+  background: #eef2ff; color: #1e40af; font-weight: 700; font-size: 13px;
+}
+.recent-list .muted { color: #000000; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.recent-list .time { color: #111827; font-weight: 700; font-size: 13px; }
