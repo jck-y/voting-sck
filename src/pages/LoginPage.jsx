@@ -58,7 +58,12 @@ export default function LoginPage() {
 return (
   <div
       className="login-page"
-      style={{ backgroundImage: `url(${bg})` }} 
+      style={{
+        backgroundImage: `url(${bg})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }}
     >
     <div className="login-container" role="form" aria-label="OSIS Election Login">
       <h2>OSIS Election Portal</h2>
