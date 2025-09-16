@@ -58,7 +58,7 @@ export default function LoginPage() {
 return (
   <div className="login-page">
     <div className="login-container" role="form" aria-label="OSIS Election Login">
-      <img src={logo} alt="OSIS Logo" className="login-logo" />
+      <img src={logo} alt="" className="login-logo" />
 
       <h2>OSIS Election Portal</h2>
       <p className="subtitle">
