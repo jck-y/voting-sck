@@ -1,0 +1,8 @@
+{
+  "emails": ["siswa1@example.com", "siswa2@example.com", "siswa3@example.com"],
+  "candidates": [
+    { "id": 1, "name": "Calon 1", "image": "/src/assets/kandidat1.jpg" },
+    { "id": 2, "name": "Calon 2", "image": "/src/assets/kandidat2.jpg" },
+    { "id": 3, "name": "Calon 3", "image": "/src/assets/kandidat3.jpg" }
+  ]
+}

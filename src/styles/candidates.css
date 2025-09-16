@@ -1,0 +1,125 @@
+/* Wrapper background full, tapi tanpa scroll */
+.candidates-wrapper {
+  height: 100vh;          
+  width: 100%;
+  overflow: hidden;       
+  background-image: url("/src/assets/logo/bgc.jpg");
+  background-repeat: repeat;       
+  background-size: 200px;        
+  /* background-color: rgba(255, 255, 255, 0.2);  */
+  background-blend-mode: multiply; 
+  animation: moveBatik 20s linear infinite;
+  padding: 24px 0;        
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+.candidates-page {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 16px;
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  row-gap: 16px;                     
+  height: 100%;                      
+}
+
+/* Header (khusus logo) */
+.cp-header {
+  text-align: center;
+}
+.cp-logo {
+  width: 300px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Title & subtitle terpisah dari header */
+.cp-hero {
+  text-align: center;
+}
+.cp-hero h1 {
+  margin: 18px 0 0px;
+  font-size: clamp(14px, 2.2vw, 24px);
+}
+.cp-hero p {
+  margin: 0;
+  color: #6b7280;
+  font-size: clamp(12px, 1.6vw, 14px);
+}
+
+
+.cp-grid {
+  margin-top: 15px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 32px;
+  justify-items: center; 
+}
+
+@media (max-width: 920px) {
+  .cp-grid {
+    grid-template-columns: repeat(2, 1fr); 
+  }
+}
+
+@media (max-width: 640px) {
+  .cp-grid {
+    grid-template-columns: 1fr; 
+  }
+}
+
+
+
+.cp-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 14px;         
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 8px 28px rgba(17, 24, 39, 0.06);
+  transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+  border: 1px solid rgba(17, 24, 39, 0.06);
+  display: grid;
+  gap: 10px;
+  max-width: 280px;      
+  margin: 0 auto;
+}
+.cp-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px 2px #007959;
+  filter: drop-shadow(0 10 4px #1a2f66);
+}
+
+
+/* Rasio gambar sedikit lebih ramping agar hemat tinggi */
+.cp-img-wrap {
+  aspect-ratio: 5 / 7;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.cp-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.cp-name {
+  font-weight: 700;
+  font-size: clamp(15px, 2vw, 17px);
+  color: #111827;
+}
+
+/* Overlay loading tetap full-screen */
+.cp-overlay { position: fixed; inset: 0; background: rgba(17,24,39,.45); display: grid; place-items: center; z-index: 50; backdrop-filter: blur(2px); }
+.cp-popup   { background: #fff; padding: 18px 22px; border-radius: 14px; min-width: 260px; box-shadow: 0 16px 48px rgba(0,0,0,.18); display: grid; justify-items: center; row-gap: 10px; }
+.cp-popup-text { font-weight: 600; color: #111827; font-size: 14px; }
+.cp-spinner { width: 40px; height: 40px; border-radius: 999px; border: 4px solid #e5e7eb; border-top-color: #6366f1; animation: cp-spin .9s linear infinite; }
+@keyframes cp-spin { to { transform: rotate(360deg); } }
+
+/* Animasi batik */
+@keyframes moveBatik { from { background-position: 0 0; } to { background-position: 40px 40px; } }
+@media (max-height: 720px) {
+  .candidates-wrapper { overflow-y: auto; }
+}
