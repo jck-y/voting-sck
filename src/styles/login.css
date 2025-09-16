@@ -5,7 +5,7 @@
   display: grid;
   place-items: center;
   overflow: hidden;
-  background-image: url("/src/assets/logo/background.webp"); /* ganti ke /bg-login.jpg jika sudah pindah ke public */
+  background-image: url("/public/background.webp");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
