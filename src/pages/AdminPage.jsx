@@ -3,7 +3,7 @@ import { collection, onSnapshot, query } from "firebase/firestore";
 import { db } from "../firebase";
 import { CANDIDATES } from "../data/candidates";
 import "../styles/admin.css";
-
+import bg from "../assets/logo/background.webp"; 
 export default function AdminPage() {
   const [counts, setCounts] = useState({});
   const [total, setTotal] = useState(0);
@@ -43,7 +43,12 @@ export default function AdminPage() {
   }, []);
 
   return (
-    <div className="admin-wrap">
+    <div className="admin-wrap" style={{
+            backgroundImage: `url(${bg})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+          }}>
       <div className="admin-page">
         <header className="adm-header">
           {/* <div className="adm-live">
