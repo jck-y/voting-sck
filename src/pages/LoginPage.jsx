@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase";
+import { ACTIVE_ELECTION } from "../config";
 import "../styles/login.css";
 import bg from "../assets/logo/background.webp"; 
 
@@ -12,15 +13,15 @@ export default function LoginPage() {
   const navigate = useNavigate();
 
   async function findVoterDoc(emailLower) {
-    // try students first
-    let ref = doc(db, "voters", emailLower);
+    // check student voters
+    let ref = doc(db, "elections", ACTIVE_ELECTION, "voters_students", emailLower);
     let snap = await getDoc(ref);
-    if (snap.exists()) return { ref, snap, coll: "voters" };
+    if (snap.exists()) return { ref, snap, coll: "voters_students" };
 
-    // then teachers
-    ref = doc(db, "voters_teacher_jhs", emailLower);
+    // check teacher voters
+    ref = doc(db, "elections", ACTIVE_ELECTION, "voters_teachers", emailLower);
     snap = await getDoc(ref);
-    if (snap.exists()) return { ref, snap, coll: "voters_teacher_jhs" };
+    if (snap.exists()) return { ref, snap, coll: "voters_teachers" };
 
     return null;
   }
@@ -29,7 +30,7 @@ export default function LoginPage() {
     setError("");
     const value = email.trim().toLowerCase();
 
-    // Admin shortcut
+    // admin shortcut
     if (value === "scklabat") {
       sessionStorage.removeItem("voterEmail");
       navigate("/admin");
@@ -46,13 +47,12 @@ export default function LoginPage() {
       const result = await findVoterDoc(value);
 
       if (!result) {
-        setError("Email is not registered.");
+        setError("Email is not registered for this election.");
       } else if (!result.snap.data().allowed) {
         setError("Access denied.");
       } else if (result.snap.data().voted) {
         setError("This email has already voted.");
       } else {
-        // store email; the vote page will figure out which collection it belongs to
         sessionStorage.setItem("voterEmail", value);
         navigate("/candidates");
       }

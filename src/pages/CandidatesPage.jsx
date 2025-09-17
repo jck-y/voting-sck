@@ -1,8 +1,14 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { doc, runTransaction, serverTimestamp } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDocs,
+  runTransaction,
+  serverTimestamp
+} from "firebase/firestore";
 import { db } from "../firebase";
-import { CANDIDATES } from "../data/candidates";
+import { ACTIVE_ELECTION } from "../config";
 import "../styles/candidates.css";
 import logo from "../assets/logo/logosck.svg";
 
@@ -11,54 +17,52 @@ export default function CandidatesPage() {
   const email = sessionStorage.getItem("voterEmail");
   const [busy, setBusy] = useState(false);
   const [picked, setPicked] = useState(null);
+  const [candidates, setCandidates] = useState([]);
 
   useEffect(() => {
     if (!email) navigate("/");
   }, [email, navigate]);
 
+  useEffect(() => {
+    // load candidates from Firestore
+    (async () => {
+      const snap = await getDocs(collection(db, "elections", ACTIVE_ELECTION, "candidates"));
+      const list = [];
+      snap.forEach(d => list.push({ id: d.id, ...d.data() }));
+      // sort by numeric id if doc ids are numbers
+      list.sort((a, b) => (Number(a.id) || 0) - (Number(b.id) || 0));
+      setCandidates(list);
+    })();
+  }, []);
+
   const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
   const vote = async (candidateId) => {
-    if (busy || !email) return; // prevent spam
+    if (busy || !email) return;
     setBusy(true);
     setPicked(candidateId);
 
     try {
-      await sleep(1200);
+      await sleep(800);
 
       await runTransaction(db, async (tx) => {
-        const studentRef = doc(db, "voters", email);
-        const teacherRef = doc(db, "voters_teacher_jhs", email);
+        const stuRef = doc(db, "elections", ACTIVE_ELECTION, "voters_students", email);
+        const tchRef = doc(db, "elections", ACTIVE_ELECTION, "voters_teachers", email);
 
-        // read both; pick whichever exists
-        const [stuSnap, tchSnap] = await Promise.all([
-          tx.get(studentRef),
-          tx.get(teacherRef),
-        ]);
+        const [stuSnap, tchSnap] = await Promise.all([ tx.get(stuRef), tx.get(tchRef) ]);
 
-        let targetRef, targetSnap;
-        if (stuSnap.exists()) {
-          targetRef = studentRef;
-          targetSnap = stuSnap;
-        } else if (tchSnap.exists()) {
-          targetRef = teacherRef;
-          targetSnap = tchSnap;
-        } else {
-          throw new Error("Email is not registered.");
-        }
+        let voterRef, voterSnap;
+        if (stuSnap.exists()) { voterRef = stuRef; voterSnap = stuSnap; }
+        else if (tchSnap.exists()) { voterRef = tchRef; voterSnap = tchSnap; }
+        else { throw new Error("Email is not registered for this election."); }
 
-        const voter = targetSnap.data();
+        const voter = voterSnap.data();
         if (!voter.allowed) throw new Error("Access denied.");
         if (voter.voted) throw new Error("This email has already voted.");
 
-        // write vote doc and mark as voted
-        const voteRef = doc(db, "votes", email);
+        const voteRef = doc(db, "elections", ACTIVE_ELECTION, "votes", email);
         tx.set(voteRef, { email, candidateId, ts: serverTimestamp() });
-        tx.update(targetRef, {
-          voted: true,
-          votedAt: serverTimestamp(),
-          candidateId,
-        });
+        tx.update(voterRef, { voted: true, votedAt: serverTimestamp(), candidateId });
       });
 
       sessionStorage.removeItem("voterEmail");
@@ -83,7 +87,7 @@ export default function CandidatesPage() {
         </div>
 
         <section className={`cp-grid ${busy ? "disabled" : ""}`}>
-          {CANDIDATES.map((c) => (
+          {candidates.map((c) => (
             <button
               key={c.id}
               className={`cp-card ${picked === c.id ? "picked" : ""}`}
@@ -96,6 +100,7 @@ export default function CandidatesPage() {
               <div className="cp-name">{c.name}</div>
             </button>
           ))}
+          {!candidates.length && <div style={{color:"#555"}}>Loading candidates…</div>}
         </section>
       </div>
 
@@ -103,9 +108,7 @@ export default function CandidatesPage() {
         <div className="cp-overlay" role="alert" aria-live="assertive">
           <div className="cp-popup">
             <div className="cp-spinner" aria-hidden />
-            <div className="cp-popup-text">
-              Recording your vote… please wait
-            </div>
+            <div className="cp-popup-text">Recording your vote… please wait</div>
           </div>
         </div>
       )}
