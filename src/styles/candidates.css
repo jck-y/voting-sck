@@ -104,6 +104,9 @@
   height: 100%;
   object-fit: cover;
   display: block;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: auto;
+  -ms-interpolation-mode: bicubic; 
 }
 .cp-name {
   font-weight: 700;
