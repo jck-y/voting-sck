@@ -141,7 +141,7 @@ export default function AdminPage() {
                   <span className="badge">
                     {cand?.name || `#${v.candidateId}`}
                   </span>
-                  <span className="muted">{v.id}</span>
+                  {/* <span className="muted">{v.id}</span> */}
                   <span className="time">{when}</span>
                 </li>
               );
